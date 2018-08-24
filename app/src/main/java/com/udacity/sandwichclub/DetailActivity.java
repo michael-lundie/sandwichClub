@@ -10,6 +10,8 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
+import org.json.JSONException;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
@@ -34,16 +36,27 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+        // Fetch dummy JSON data.
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        // Return sandwich object for the currently selected sandwich. Delicious!
+        Sandwich sandwich = null;
+        try {
+            //TODO: Improve try/catch
+            sandwich = JsonUtils.parseSandwichJson(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
+        //Looks like we have a sandwich, success! Let's start chewing our way through it. (Geddit ;] )
         populateUI();
+
+        //Set-up our image using Picasso.
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
