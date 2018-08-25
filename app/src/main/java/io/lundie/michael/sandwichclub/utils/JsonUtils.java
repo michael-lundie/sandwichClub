@@ -1,9 +1,9 @@
-package com.udacity.sandwichclub.utils;
+package io.lundie.michael.sandwichclub.utils;
 
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.udacity.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.model.Sandwich;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,16 +1,19 @@
-package com.udacity.sandwichclub;
+package io.lundie.michael.sandwichclub;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.udacity.sandwichclub.model.Sandwich;
-import com.udacity.sandwichclub.utils.JsonUtils;
+import io.lundie.michael.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.utils.JsonUtils;
 
 import org.json.JSONException;
+
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -54,7 +57,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         //Looks like we have a sandwich, success! Let's start chewing our way through it. (Geddit ;] )
-        populateUI();
+        populateUI(sandwich.getPlaceOfOrigin(), sandwich.getAlsoKnownAs(), sandwich.getIngredients(),
+                sandwich.getDescription());
 
         //Set-up our image using Picasso.
         Picasso.with(this)
@@ -69,7 +73,27 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(String originText, List pseudonymsList, List ingredientsList,
+                            String descriptionText) {
 
+        // Get reference to our view objects.
+        TextView originTv = (TextView) findViewById(R.id.origin_tv);
+        TextView alsoKnownAsTv = (TextView)  findViewById(R.id.also_known_tv);
+        TextView ingredientsTv = (TextView) findViewById(R.id.ingredients_tv);
+        TextView descriptionTV = (TextView) findViewById(R.id.description_tv);
+
+        originTv.setText(originText);
+        alsoKnownAsTv.setText(listStringBuilder(pseudonymsList));
+        ingredientsTv.setText(listStringBuilder(ingredientsList));
+        descriptionTV.setText(descriptionText);
+    }
+
+    private String listStringBuilder(List inputList) {
+        StringBuilder outputString = new StringBuilder();
+        for (int i = 0; i < inputList.size(); i++) {
+            outputString.append(inputList.get(i));
+            if(i != inputList.size()-1) { outputString.append(", "); }
+        }
+        return outputString.toString();
     }
 }

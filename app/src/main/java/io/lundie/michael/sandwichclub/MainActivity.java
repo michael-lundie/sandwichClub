@@ -1,4 +1,4 @@
-package com.udacity.sandwichclub;
+package io.lundie.michael.sandwichclub;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import io.lundie.michael.sandwichclub.DetailActivity;
+import io.lundie.michael.sandwichclub.R;
 
 public class MainActivity extends AppCompatActivity {
 
