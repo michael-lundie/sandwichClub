@@ -13,6 +13,12 @@ import java.util.ArrayList;
 
 public class JsonUtils {
 
+    /**
+     * A simple method used to parse input JSON data and output as an object.
+     * @param sandwichJson Input JSON as String.
+     * @return Sandwich object, containing parsed JSON data.
+     * @throws JSONException
+     */
     public static Sandwich parseSandwichJson(String sandwichJson) throws JSONException {
 
         Sandwich mySandwich = new Sandwich();
@@ -54,10 +60,9 @@ public class JsonUtils {
         Log.i("TEST", "JSON data: " + mySandwich.getPlaceOfOrigin());
 
         // Next up: grab our image url
-        // TODO: test and validate correct URL
         mySandwich.setImage(jsonSandwichObject.getString("image"));
 
-        // Last, but not least... The ingredients! Omnomnom.
+        // Next, the ingredients! Omnomnom.
         JSONArray ingredientsJsa = jsonSandwichObject.getJSONArray("ingredients");
         ArrayList<String> ingredients = new ArrayList<>();
         if (ingredientsJsa != null) {
@@ -70,7 +75,10 @@ public class JsonUtils {
         mySandwich.setIngredients(ingredients);
         Log.i("TEST", "JSON data: " + mySandwich.getIngredients());
 
-        return mySandwich;
+        // Last but not least, the description!
 
+        mySandwich.setDescription(jsonSandwichObject.getString("description"));
+
+        return mySandwich;
     }
 }
