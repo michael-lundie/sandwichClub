@@ -3,9 +3,9 @@ package io.lundie.michael.sandwichclub;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -95,7 +95,7 @@ public class DetailActivity extends AppCompatActivity {
         final TextView imageErrorTv = (TextView) findViewById(R.id.image_error);
 
         //Set-up our image using Picasso.
-        Picasso.with(this)
+        Picasso.get()
                 .load(sandwich.getImage())
                 .into(ingredientsIv, new Callback() {
                     @Override
@@ -103,8 +103,9 @@ public class DetailActivity extends AppCompatActivity {
                         // Hide our progress bar view on completion of image download.
                         progressBar.setVisibility(View.GONE);
                     }
+
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         // On error, hide progress bar and show error text in UI.
                         progressBar.setVisibility(View.GONE);
                         imageErrorTv.setVisibility(View.VISIBLE);
