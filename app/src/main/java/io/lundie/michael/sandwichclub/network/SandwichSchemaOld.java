@@ -1,9 +1,8 @@
-package io.lundie.michael.sandwichclub.model;
+package io.lundie.michael.sandwichclub.network;
 
 import java.util.List;
-import java.util.Objects;
 
-public class Sandwich {
+public class SandwichSchemaOld {
 
     private String mainName;
     private List<String> alsoKnownAs = null;
@@ -15,10 +14,10 @@ public class Sandwich {
     /**
      * No args constructor for use in serialization
      */
-    public Sandwich() {
+    public SandwichSchemaOld() {
     }
 
-    public Sandwich(String mainName, List<String> alsoKnownAs, String placeOfOrigin, String description, String image, List<String> ingredients) {
+    public SandwichSchemaOld(String mainName, List<String> alsoKnownAs, String placeOfOrigin, String description, String image, List<String> ingredients) {
         this.mainName = mainName;
         this.alsoKnownAs = alsoKnownAs;
         this.placeOfOrigin = placeOfOrigin;
@@ -73,23 +72,5 @@ public class Sandwich {
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sandwich sandwich = (Sandwich) o;
-        return mainName.equals(sandwich.mainName) &&
-                Objects.equals(alsoKnownAs, sandwich.alsoKnownAs) &&
-                Objects.equals(placeOfOrigin, sandwich.placeOfOrigin) &&
-                Objects.equals(description, sandwich.description) &&
-                Objects.equals(image, sandwich.image) &&
-                Objects.equals(ingredients, sandwich.ingredients);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mainName, alsoKnownAs, placeOfOrigin, description, image, ingredients);
     }
 }
