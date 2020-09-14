@@ -1,4 +1,4 @@
-package io.lundie.michael.sandwichclub.screens.common;
+package io.lundie.michael.sandwichclub.screens.common.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 

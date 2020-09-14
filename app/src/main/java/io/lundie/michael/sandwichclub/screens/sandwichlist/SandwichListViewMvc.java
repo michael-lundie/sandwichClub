@@ -4,8 +4,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
 
-import io.lundie.michael.sandwichclub.common.ObservableViewMvc;
-import io.lundie.michael.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
+import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 
 public interface SandwichListViewMvc extends ObservableViewMvc<SandwichListViewMvc.Listener> {
 

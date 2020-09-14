@@ -1,4 +1,4 @@
-package io.lundie.michael.sandwichclub.common;
+package io.lundie.michael.sandwichclub.screens.common.view;
 
 public interface ObservableViewMvc<ListenerType> extends ViewMvc {
 

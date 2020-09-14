@@ -1,4 +1,4 @@
-package io.lundie.michael.sandwichclub;
+package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -16,10 +16,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import io.lundie.michael.sandwichclub.model.Sandwich;
-import io.lundie.michael.sandwichclub.utils.JsonUtils;
-
-import org.json.JSONException;
+import io.lundie.michael.sandwichclub.R;
+import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 
 import java.util.List;
 
@@ -28,11 +26,11 @@ import java.util.List;
  * Note: The UI makes use of modified code from Chris Banes:
  * https://plus.google.com/+ChrisBanes/posts/J9Fwbc15BHN
  */
-public class DetailActivity extends AppCompatActivity {
+public class SandwichDetailActivity extends AppCompatActivity {
 
-    public static final String LOG_TAG = DetailActivity.class.getName();
+    public static final String LOG_TAG = SandwichDetailActivity.class.getName();
 
-    public static final String EXTRA_POSITION = "extra_position";
+    public static final String PARCELABLE_EXTRA = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
     @Override
@@ -47,28 +45,28 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
         }
 
-        int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
-        if (position == DEFAULT_POSITION) {
+        Sandwich sandwich = intent.getParcelableExtra(PARCELABLE_EXTRA);
+        if (sandwich == null) {
             // EXTRA_POSITION not found in intent
             closeOnError();
             return;
         }
 
-        // Fetch dummy JSON data.
-        String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
-        String json = sandwiches[position];
-        // Return sandwich object for the currently selected sandwich. Delicious!
-        Sandwich sandwich = null;
-        try {
-            sandwich = JsonUtils.parseSandwichJson(json);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "Error parsing JSON", e);
-        }
-        if (sandwich == null) {
-            // Sandwich data unavailable
-            closeOnError();
-            return;
-        }
+//        // Fetch dummy JSON data.
+//        String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
+//        String json = sandwiches[position];
+//        // Return sandwich object for the currently selected sandwich. Delicious!
+//        Sandwich sandwich = null;
+//        try {
+//            sandwich = JsonUtils.parseSandwichJson(json);
+//        } catch (JSONException e) {
+//            Log.e(LOG_TAG, "Error parsing JSON", e);
+//        }
+//        if (sandwich == null) {
+//            // Sandwich data unavailable
+//            closeOnError();
+//            return;
+//        }
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

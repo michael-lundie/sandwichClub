@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity" android:parentActivityName=".screens.sandwichlist.SandwichListActivity">
+        <activity android:name=".screens.sandwichdetail.SandwichDetailActivity" android:parentActivityName=".screens.sandwichlist.SandwichListActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".screens.sandwichlist.SandwichListActivity" />
         </activity>

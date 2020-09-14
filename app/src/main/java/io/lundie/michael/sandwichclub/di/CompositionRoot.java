@@ -2,6 +2,7 @@ package io.lundie.michael.sandwichclub.di;
 
 import com.google.gson.Gson;
 
+import io.lundie.michael.sandwichclub.common.AppExecutors;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,7 +13,7 @@ public class CompositionRoot {
     private OkHttpClient okHttpClient;
     private Gson gson;
 
-    public Call getSandwichesApi() {
+    public Call getSandwichesDataDumpApi() {
         Request request = new Request.Builder()
                 .url("http://quest.lundie.io/sandwiches.json")
                 .build();
@@ -34,5 +35,9 @@ public class CompositionRoot {
             okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         }
         return okHttpClient;
+    }
+
+    public AppExecutors getAppExecutors() {
+        return AppExecutors.getInstance();
     }
 }

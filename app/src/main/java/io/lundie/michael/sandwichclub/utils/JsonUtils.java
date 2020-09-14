@@ -3,7 +3,7 @@ package io.lundie.michael.sandwichclub.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import io.lundie.michael.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 
 import org.json.JSONArray;
 import org.json.JSONException;

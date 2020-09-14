@@ -1,9 +1,13 @@
-package io.lundie.michael.sandwichclub.model;
+package io.lundie.michael.sandwichclub.sandwiches;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Sandwich {
+public class Sandwich implements Parcelable {
 
     private String mainName;
     private List<String> alsoKnownAs = null;
@@ -11,6 +15,10 @@ public class Sandwich {
     private String description;
     private String image;
     private List<String> ingredients = null;
+    private String imageLarge;
+    private String imageLicense;
+    private String imageAuthor;
+    private String imageLink;
 
     /**
      * No args constructor for use in serialization
@@ -26,6 +34,32 @@ public class Sandwich {
         this.image = image;
         this.ingredients = ingredients;
     }
+
+    public Sandwich(Parcel in) {
+        this.mainName = in.readString();
+        alsoKnownAs = new ArrayList<>();
+        in.readStringList(alsoKnownAs);
+        this.placeOfOrigin = in.readString();
+        this.description = in.readString();
+        this.image = in.readString();
+        ingredients = new ArrayList<>();
+        in.readStringList(ingredients);
+        this.imageLicense = in.readString();
+        this.imageAuthor = in.readString();
+        this.imageLink = in.readString();
+    }
+
+    public static final Creator<Sandwich> CREATOR = new Creator<Sandwich>() {
+        @Override
+        public Sandwich createFromParcel(Parcel in) {
+            return new Sandwich(in);
+        }
+
+        @Override
+        public Sandwich[] newArray(int size) {
+            return new Sandwich[size];
+        }
+    };
 
     public String getMainName() {
         return mainName;
@@ -73,6 +107,53 @@ public class Sandwich {
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void setImageLarge(String imageLarge) {
+        this.imageLarge = imageLarge;
+    }
+
+    public void setImageLicense(String imageLicense) {
+        this.imageLicense = imageLicense;
+    }
+
+    public String getImageLicense() {
+        return imageLicense;
+    }
+
+    public void setImageAuthor(String imageAuthor) {
+        this.imageAuthor = imageAuthor;
+    }
+
+    public String getImageAuthor() {
+        return imageAuthor;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mainName);
+        dest.writeStringList(alsoKnownAs);
+        dest.writeString(placeOfOrigin);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeStringList(ingredients);
+        dest.writeString(imageLarge);
+        dest.writeString(imageLicense);
+        dest.writeString(imageAuthor);
+        dest.writeString(imageLink);
     }
 
     @Override

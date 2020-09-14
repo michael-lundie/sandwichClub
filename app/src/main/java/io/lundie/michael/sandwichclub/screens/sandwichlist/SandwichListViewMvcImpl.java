@@ -1,8 +1,6 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
@@ -10,12 +8,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.lundie.michael.sandwichclub.R;
-import io.lundie.michael.sandwichclub.common.BaseObservableViewMvc;
-import io.lundie.michael.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
+import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
 
 public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListViewMvc.Listener>

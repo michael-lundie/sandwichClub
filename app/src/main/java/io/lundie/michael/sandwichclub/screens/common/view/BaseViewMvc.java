@@ -1,4 +1,4 @@
-package io.lundie.michael.sandwichclub.common;
+package io.lundie.michael.sandwichclub.screens.common.view;
 
 import android.content.Context;
 import android.view.View;

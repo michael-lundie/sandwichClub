@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListItemViewMvc;
-import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListItemViewMvcImpl;
+import io.lundie.michael.sandwichclub.screens.sandwichlist.sandwichlistitem.SandwichListItemViewMvc;
+import io.lundie.michael.sandwichclub.screens.sandwichlist.sandwichlistitem.SandwichListItemViewMvcImpl;
 import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListViewMvc;
 import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListViewMvcImpl;
 

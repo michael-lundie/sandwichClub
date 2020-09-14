@@ -1,4 +1,4 @@
-package io.lundie.michael.sandwichclub.common;
+package io.lundie.michael.sandwichclub.screens.common.view;
 
 import java.util.Collections;
 import java.util.HashSet;

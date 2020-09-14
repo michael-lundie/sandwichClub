@@ -1,7 +1,7 @@
-package io.lundie.michael.sandwichclub.screens.sandwichlist;
+package io.lundie.michael.sandwichclub.screens.sandwichlist.sandwichlistitem;
 
-import io.lundie.michael.sandwichclub.common.ObservableViewMvc;
-import io.lundie.michael.sandwichclub.model.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
+import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 
 public interface SandwichListItemViewMvc extends ObservableViewMvc<SandwichListItemViewMvc.Listener> {
 
