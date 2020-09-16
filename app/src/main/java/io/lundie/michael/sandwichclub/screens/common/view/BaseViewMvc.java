@@ -14,7 +14,6 @@ public abstract class BaseViewMvc implements ViewMvc {
         this.rootView = rootView;
     }
 
-
     protected Context getContext() {
         return getRootView().getContext();
     }

@@ -1,12 +1,8 @@
 package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -18,27 +14,33 @@ import com.squareup.picasso.Picasso;
 
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
-
-import java.util.List;
+import io.lundie.michael.sandwichclub.screens.common.controllers.BaseActivity;
 
 /**
  * Detail Activity for sandwich club app.
  * Note: The UI makes use of modified code from Chris Banes:
  * https://plus.google.com/+ChrisBanes/posts/J9Fwbc15BHN
  */
-public class SandwichDetailActivity extends AppCompatActivity {
+public class SandwichDetailActivity extends BaseActivity {
 
     public static final String LOG_TAG = SandwichDetailActivity.class.getName();
 
-    public static final String PARCELABLE_EXTRA = "extra_position";
-    private static final int DEFAULT_POSITION = -1;
+    public static final String PARCELABLE_EXTRA = "extra_parcel";
+
+    public static void start(Context context, Sandwich sandwich) {
+        Intent intent = new Intent(context, SandwichDetailActivity.class);
+        intent.putExtra(SandwichDetailActivity.PARCELABLE_EXTRA, sandwich);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        SandwichDetailViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getSandwichDetailViewMvc(null);
 
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
+        setSupportActionBar(viewMvc.getToolbar());
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -52,116 +54,18 @@ public class SandwichDetailActivity extends AppCompatActivity {
             return;
         }
 
-//        // Fetch dummy JSON data.
-//        String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
-//        String json = sandwiches[position];
-//        // Return sandwich object for the currently selected sandwich. Delicious!
-//        Sandwich sandwich = null;
-//        try {
-//            sandwich = JsonUtils.parseSandwichJson(json);
-//        } catch (JSONException e) {
-//            Log.e(LOG_TAG, "Error parsing JSON", e);
-//        }
-//        if (sandwich == null) {
-//            // Sandwich data unavailable
-//            closeOnError();
-//            return;
-//        }
+        viewMvc.setCollapsingToolbar(sandwich.getMainName());
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        String detailTitle = sandwich.getMainName();
-
-        // Check if phone is in portrait mode then adjust font sizes to fit any long titles.
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
-                detailTitle.length() > 14 ){
-            collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolBarSmall);
-            collapsingToolbar.setExpandedTitleMargin(48,0,16,112);
-        }
-
-        collapsingToolbar.setTitle(detailTitle);
-
-        //Looks like we have a sandwich, success! Let's start chewing our way through it. (Geddit ;] )
-        populateUI(sandwich.getPlaceOfOrigin(), sandwich.getAlsoKnownAs(), sandwich.getIngredients(),
-                sandwich.getDescription());
-
-        // Get reference to the progress bar view
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        final TextView imageErrorTv = (TextView) findViewById(R.id.image_error);
-
-        //Set-up our image using Picasso.
-        Picasso.get()
-                .load(sandwich.getImage())
-                .into(ingredientsIv, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        // Hide our progress bar view on completion of image download.
-                        progressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        // On error, hide progress bar and show error text in UI.
-                        progressBar.setVisibility(View.GONE);
-                        imageErrorTv.setVisibility(View.VISIBLE);
-                    }
-                });
+        viewMvc.loadImages(sandwich.getImage());
 
         setTitle(sandwich.getMainName());
+
+        viewMvc.bindSandwich(sandwich);
+        setContentView(viewMvc.getRootView());
     }
 
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * A method to populate the user interface with our parsed dummy JSON data.
-     * @param originText Place of origin text as String.
-     * @param pseudonymsList List of pseudonyms as List
-     * @param ingredientsList List of ingredients as List.
-     * @param descriptionText Description text as String.
-     */
-    private void populateUI(String originText, List pseudonymsList, List ingredientsList,
-                            String descriptionText) {
-
-        // Get reference to our view objects.
-        TextView originTv = (TextView) findViewById(R.id.origin_tv);
-        TextView alsoKnownAsTv = (TextView)  findViewById(R.id.also_known_tv);
-        TextView ingredientsTv = (TextView) findViewById(R.id.ingredients_tv);
-        TextView descriptionTV = (TextView) findViewById(R.id.description_tv);
-
-        // Check if origin text data exists. If not, set appropriate text.
-        if(originText.length() == 0 ) {
-            originText = this.getString(R.string.detail_no_origin);
-        }
-
-        originTv.setText(originText);
-        descriptionTV.setText(descriptionText);
-        ingredientsTv.setText(listStringBuilder(ingredientsList));
-
-        // Check if pseudonyms exist and deal with each case appropriately.
-        if(pseudonymsList.size() == 0 ) {
-            alsoKnownAsTv.setText(this.getString(R.string.detail_no_pseudonym));
-        } else {
-            alsoKnownAsTv.setText(listStringBuilder(pseudonymsList));
-        }
-    }
-
-    /**
-     * A simple method to convert a list into a comma seperated value list.
-     * @param inputList The input List
-     * @return List as comma seperated value string
-     */
-    private String listStringBuilder(List inputList) {
-        StringBuilder outputString = new StringBuilder();
-        for (int i = 0; i < inputList.size(); i++) {
-            outputString.append(inputList.get(i));
-            if(i != inputList.size()-1) { outputString.append(", "); }
-        }
-        return outputString.toString();
     }
 }
