@@ -19,7 +19,7 @@ public class FetchSandwichesUseCase extends BaseObservable<FetchSandwichesUseCas
     private final Call sandwichesDataDump;
     private final Gson gson;
     private AppExecutors appExecutors;
-    List<Sandwich> sandwiches = new ArrayList<>();
+    List<Sandwich> sandwiches;
 
     public interface Listener {
         void onSandwichesFetched(List<Sandwich> sandwiches);
@@ -58,6 +58,7 @@ public class FetchSandwichesUseCase extends BaseObservable<FetchSandwichesUseCas
     }
 
     private void notifySuccess(List<SandwichSchema> sandwichSchemas) {
+        sandwiches = new ArrayList<>();
         for (int i = 0; i < sandwichSchemas.size(); i++) {
             SandwichSchema sandwichSchema = sandwichSchemas.get(i);
             Sandwich sandwich = new Sandwich();
