@@ -25,7 +25,7 @@ public class ViewMvcFactory {
     }
 
     public SandwichDetailViewMvc getSandwichDetailViewMvc(@Nullable ViewGroup parent) {
-        return new SandwichDetailViewMvcImpl(layoutInflater, parent, this) {
+        return new SandwichDetailViewMvcImpl(layoutInflater, parent) {
         };
     }
 

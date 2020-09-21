@@ -15,11 +15,6 @@ public class ScreensNavigator {
     }
 
     public void toScreenDetails(Sandwich sandwich) {
-        SandwichDetailActivity.start(context, sandwich);
-        Intent intent = new Intent(context, SandwichDetailActivity.class);
-        intent.putExtra(SandwichDetailActivity.PARCELABLE_EXTRA, sandwich);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.getApplicationContext().startActivity(intent);
-        //TODO: complete implementation
+        SandwichDetailActivity.startActivity(context, sandwich);
     }
 }

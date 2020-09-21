@@ -2,7 +2,9 @@ package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.util.Log;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
@@ -11,10 +13,13 @@ import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNav
 public class SandwichListController implements SandwichListViewMvcImpl.Listener, FetchSandwichesUseCase.Listener {
 
     private final FetchSandwichesUseCase fetchSandwichesUseCase;
+    private final ScreensNavigator screensNavigator;
     private SandwichListViewMvc sandwichListViewMvc;
-    private ScreensNavigator screensNavigator;
+    private long lastSandwichFetch = 0L;
+    private long refreshTimeNanoseconds = 60000000000L;
 
-    public SandwichListController(FetchSandwichesUseCase fetchSandwichesUseCase, ScreensNavigator screensNavigator) {
+    public SandwichListController(FetchSandwichesUseCase fetchSandwichesUseCase,
+                                  ScreensNavigator screensNavigator) {
         this.fetchSandwichesUseCase = fetchSandwichesUseCase;
         this.screensNavigator = screensNavigator;
     }
@@ -28,7 +33,18 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
     public void onStart() {
         fetchSandwichesUseCase.registerListener(this);
         sandwichListViewMvc.registerListener(this);
-        fetchSandwichesUseCase.fetchSandwichesAndNotify();
+
+        if(lastSandwichFetch != 0L) {
+            long seconds;
+            seconds = System.nanoTime() - lastSandwichFetch;
+            seconds = TimeUnit.NANOSECONDS.toSeconds(seconds);
+            Log.i(getClass().getSimpleName(), "Last fetch was " + seconds + " seconds ago");
+        }
+
+        if(lastSandwichFetch == 0L || ((System.nanoTime() - lastSandwichFetch) > refreshTimeNanoseconds)) {
+            lastSandwichFetch = System.nanoTime();
+            fetchSandwichesUseCase.fetchSandwichesAndNotify();
+        }
     }
 
     public void onStop() {

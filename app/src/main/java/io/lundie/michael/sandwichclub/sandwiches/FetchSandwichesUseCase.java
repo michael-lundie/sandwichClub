@@ -36,7 +36,7 @@ public class FetchSandwichesUseCase extends BaseObservable<FetchSandwichesUseCas
         appExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
-                try (Response response = sandwichesDataDump.execute()) {
+                try (Response response = sandwichesDataDump.clone().execute()) {
                     //Success
                     try (ResponseBody responseBody = response.body()) {
                         String sandwichesJson = responseBody.string();
@@ -82,6 +82,5 @@ public class FetchSandwichesUseCase extends BaseObservable<FetchSandwichesUseCas
                 }
             }
         });
-
     }
 }

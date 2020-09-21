@@ -23,7 +23,6 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
 
     public SandwichListViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_list, parent, false));
-
         sandwichesRv = findViewById(R.id.sandwiches_listview);
         sandwichesRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SandwichRecyclerAdapter(this, viewMvcFactory);

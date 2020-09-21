@@ -1,6 +1,8 @@
 package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +20,24 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import io.lundie.michael.sandwichclub.R;
+import io.lundie.michael.sandwichclub.common.BaseObservable;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
+import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
 import io.lundie.michael.sandwichclub.screens.common.view.BaseViewMvc;
 
-public class SandwichDetailViewMvcImpl extends BaseViewMvc implements SandwichDetailViewMvc {
+public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDetailViewMvc.Listener>
+        implements SandwichDetailViewMvc {
 
-    public SandwichDetailViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent,
-                                     ViewMvcFactory viewMvcFactory) {
+    private ProgressBar progressBar;
+    private ImageView headerIv;
+    private TextView imageErrorTv;
+
+    public SandwichDetailViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_detail, parent, false));
+        progressBar = findViewById(R.id.progressbar);
+        headerIv = findViewById(R.id.image_iv);
+        imageErrorTv = findViewById(R.id.image_error);
     }
 
     @Override
@@ -48,9 +59,10 @@ public class SandwichDetailViewMvcImpl extends BaseViewMvc implements SandwichDe
         }
     }
 
+
+
     @Override
     public void bindSandwich(Sandwich sandwich) {
-
         TextView originTv = (TextView) findViewById(R.id.origin_tv);
         TextView alsoKnownAsTv = (TextView)  findViewById(R.id.also_known_tv);
         TextView ingredientsTv = (TextView) findViewById(R.id.ingredients_tv);
@@ -78,28 +90,28 @@ public class SandwichDetailViewMvcImpl extends BaseViewMvc implements SandwichDe
     }
 
     @Override
-    public void loadImages(String imageUrl) {
-        // Get reference to the progress bar view
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        final TextView imageErrorTv = (TextView) findViewById(R.id.image_error);
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
-        //Set-up our image using Picasso.
-        Picasso.get()
-                .load(imageUrl)
-                .into(ingredientsIv, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        // Hide our progress bar view on completion of image download.
-                        progressBar.setVisibility(View.GONE);
-                    }
+    public void bindHeaderImage(Bitmap bitmap) {
+        headerIv.setImageBitmap(bitmap);
+    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        // On error, hide progress bar and show error text in UI.
-                        progressBar.setVisibility(View.GONE);
-                        imageErrorTv.setVisibility(View.VISIBLE);
-                    }
-                });
+    @Override
+    public void bindHeaderImage(Drawable drawable) {
+        headerIv.setImageDrawable(drawable);
+    }
+
+    @Override
+    public void showImageErrorText() {
+        imageErrorTv.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showImageProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideImageProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
     /**
