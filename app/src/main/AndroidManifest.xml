@@ -13,15 +13,11 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.sandwichlist.SandwichListActivity">
+        <activity android:name=".screens.common.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".screens.sandwichdetail.SandwichDetailActivity" android:parentActivityName=".screens.sandwichlist.SandwichListActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".screens.sandwichlist.SandwichListActivity" />
         </activity>
     </application>
 

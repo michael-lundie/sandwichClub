@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import io.lundie.michael.sandwichclub.common.AppExecutors;
+import io.lundie.michael.sandwichclub.screens.common.controllers.FragmentFrameWrapper;
+import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
 import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNavigator;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
 import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
@@ -18,14 +23,12 @@ import okhttp3.Call;
 
 public class ControllerCompositionRoot {
 
-    private final CompositionRoot compositionRoot;
-    private Activity activity;
+    private final ActivityCompositionRoot activityCompositionRoot;
 
     private Picasso picasso;
 
-    public ControllerCompositionRoot(CompositionRoot compositionRoot, Activity activity) {
-        this.compositionRoot = compositionRoot;
-        this.activity = activity;
+    public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
+        this.activityCompositionRoot = activityCompositionRoot;
     }
 
     public Picasso getPicasso() {
@@ -35,16 +38,24 @@ public class ControllerCompositionRoot {
         return picasso;
     }
 
+    private FragmentManager getFragmentManager() {
+        return getActivity().getSupportFragmentManager();
+    }
+
+    private AppCompatActivity getActivity() {
+        return activityCompositionRoot.getAppCompatActivity();
+    }
+
     private Gson getGson() {
-        return compositionRoot.getGson();
+        return activityCompositionRoot.getGson();
     }
 
     private Call getSandwichesDataDumpApi() {
-        return compositionRoot.getSandwichesDataDumpApi();
+        return activityCompositionRoot.getSandwichesDataDumpApi();
     }
 
     private LayoutInflater getLayoutInflater() {
-        return LayoutInflater.from(activity);
+        return LayoutInflater.from(activityCompositionRoot.getAppCompatActivity());
     }
 
     public ViewMvcFactory getViewMvcFactory() {
@@ -60,22 +71,32 @@ public class ControllerCompositionRoot {
     }
 
     private AppExecutors getAppExecutors() {
-        return compositionRoot.getAppExecutors();
+        return activityCompositionRoot.getAppExecutors();
     }
 
     public SandwichListController getSandwichListController() {
-        return  new SandwichListController(getFetchSandwichesUseCase(), getScreensNavigator());
+        return  new SandwichListController(getFetchSandwichesUseCase(), getUpPressedDispatcher(),
+                getScreensNavigator());
     }
 
     private Context getContext() {
-        return activity;
+        return activityCompositionRoot.getAppCompatActivity();
     }
 
     private ScreensNavigator getScreensNavigator() {
-        return new ScreensNavigator(getContext());
+        return new ScreensNavigator(getFragmentManager(), getFragmentFrameWrapper());
+    }
+
+    private FragmentFrameWrapper getFragmentFrameWrapper() {
+        return (FragmentFrameWrapper) getActivity();
     }
 
     public SandwichDetailController getSandwichDetailController() {
-        return new SandwichDetailController(getFetchImageUseCase(), getScreensNavigator());
+        return new SandwichDetailController(getFetchImageUseCase(), getUpPressedDispatcher(),
+                getScreensNavigator());
+    }
+
+    private UpPressedDispatcher getUpPressedDispatcher() {
+        return (UpPressedDispatcher) getActivity();
     }
 }

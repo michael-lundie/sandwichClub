@@ -4,18 +4,23 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
+import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedListener;
 import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNavigator;
 
-public class SandwichDetailController implements FetchImageUseCase.Listener {
+public class SandwichDetailController implements FetchImageUseCase.Listener, UpPressedListener {
 
     private FetchImageUseCase fetchImageUseCase;
     SandwichDetailViewMvc sandwichDetailViewMvc;
     private final ScreensNavigator screensNavigator;
+    private UpPressedDispatcher dispatcher;
     private Sandwich sandwich;
 
     public SandwichDetailController(FetchImageUseCase fetchImageUseCase,
+                                    UpPressedDispatcher dispatcher,
                                     ScreensNavigator screensNavigator) {
         this.fetchImageUseCase = fetchImageUseCase;
+        this.dispatcher = dispatcher;
         this.screensNavigator = screensNavigator;
     }
 
@@ -26,11 +31,13 @@ public class SandwichDetailController implements FetchImageUseCase.Listener {
     }
 
     public void onStart() {
+        dispatcher.registerListener(this);
         fetchImageUseCase.registerListener(this);
         fetchImageUseCase.fetchImageAndNotify(sandwich.getImage());
     }
 
     public void onStop() {
+        dispatcher.unregisterListener(this);
         fetchImageUseCase.unregisterListener(this);
     }
 
@@ -61,5 +68,9 @@ public class SandwichDetailController implements FetchImageUseCase.Listener {
         sandwichDetailViewMvc.setCollapsingToolbar(sandwich.getMainName());
     }
 
-
+    @Override
+    public boolean onUpPressed() {
+        screensNavigator.toScreenList();
+        return true;
+    }
 }

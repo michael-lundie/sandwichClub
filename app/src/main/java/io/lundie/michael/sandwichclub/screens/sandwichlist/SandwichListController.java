@@ -8,19 +8,24 @@ import java.util.concurrent.TimeUnit;
 
 import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
+import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedListener;
 import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNavigator;
 
-public class SandwichListController implements SandwichListViewMvcImpl.Listener, FetchSandwichesUseCase.Listener {
+public class SandwichListController implements SandwichListViewMvcImpl.Listener, FetchSandwichesUseCase.Listener, UpPressedListener {
 
     private final FetchSandwichesUseCase fetchSandwichesUseCase;
+    private UpPressedDispatcher dispatcher;
     private final ScreensNavigator screensNavigator;
     private SandwichListViewMvc sandwichListViewMvc;
     private long lastSandwichFetch = 0L;
     private long refreshTimeNanoseconds = 60000000000L;
 
     public SandwichListController(FetchSandwichesUseCase fetchSandwichesUseCase,
+                                  UpPressedDispatcher dispatcher,
                                   ScreensNavigator screensNavigator) {
         this.fetchSandwichesUseCase = fetchSandwichesUseCase;
+        this.dispatcher = dispatcher;
         this.screensNavigator = screensNavigator;
     }
 
@@ -32,6 +37,7 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
 
     public void onStart() {
         fetchSandwichesUseCase.registerListener(this);
+        dispatcher.registerListener(this);
         sandwichListViewMvc.registerListener(this);
 
         if(lastSandwichFetch != 0L) {
@@ -48,6 +54,7 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
     }
 
     public void onStop() {
+        dispatcher.unregisterListener(this);
         fetchSandwichesUseCase.unregisterListener(this);
     }
 
@@ -66,5 +73,10 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
     public void onSandwichClicked(Sandwich sandwich) {
         Log.e(getClass().getSimpleName(), "Controller: Sandwich " + sandwich.getMainName() + " CLICKED.");
         screensNavigator.toScreenDetails(sandwich);
+    }
+
+    @Override
+    public boolean onUpPressed() {
+        return false;
     }
 }

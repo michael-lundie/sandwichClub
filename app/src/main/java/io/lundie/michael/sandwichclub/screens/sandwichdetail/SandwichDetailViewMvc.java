@@ -11,7 +11,6 @@ import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
 public interface SandwichDetailViewMvc extends ObservableViewMvc<SandwichDetailViewMvc.Listener> {
 
     interface Listener {
-
         void onBackPressed();
     }
 
