@@ -2,6 +2,7 @@ package io.lundie.michael.sandwichclub.di;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class ControllerCompositionRoot {
     private final ActivityCompositionRoot activityCompositionRoot;
 
     private Picasso picasso;
+    private SandwichListController sandwichListController;
 
     public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
         this.activityCompositionRoot = activityCompositionRoot;
@@ -75,8 +77,10 @@ public class ControllerCompositionRoot {
     }
 
     public SandwichListController getSandwichListController() {
-        return  new SandwichListController(getFetchSandwichesUseCase(), getUpPressedDispatcher(),
-                getScreensNavigator());
+        if(sandwichListController == null) {
+            sandwichListController =  new SandwichListController(getFetchSandwichesUseCase(), getUpPressedDispatcher(),
+                    getScreensNavigator());
+        } return sandwichListController;
     }
 
     private Context getContext() {

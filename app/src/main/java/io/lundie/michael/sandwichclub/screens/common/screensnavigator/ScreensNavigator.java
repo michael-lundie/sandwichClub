@@ -7,6 +7,7 @@ import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.controllers.FragmentFrameWrapper;
 import io.lundie.michael.sandwichclub.screens.sandwichdetail.SandwichDetailFragment;
+import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragment;
 
 public class ScreensNavigator {
 
@@ -24,10 +25,15 @@ public class ScreensNavigator {
     public void toScreenDetails(Sandwich sandwich) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         SandwichDetailFragment detailFragment = SandwichDetailFragment.newInstance(sandwich);
-        ft.replace(fragmentFrameWrapper.getFragmentFrame().getId(), detailFragment).addToBackStack("detailsFrag").commit();
+        ft.add(fragmentFrameWrapper.getFragmentFrame().getId(), detailFragment).addToBackStack("detailsFrag").commit();
     }
 
     public void toScreenList() {
-        fragmentManager.popBackStack();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        SandwichListFragment fragment = (SandwichListFragment) fragmentManager.findFragmentByTag("FRAGTAG_LIST");
+        if(fragment != null) {
+            ft.replace(fragmentFrameWrapper.getFragmentFrame().getId(), fragment).commit();
+        }
     }
 }

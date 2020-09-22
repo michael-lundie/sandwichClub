@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import io.lundie.michael.sandwichclub.R;
@@ -20,7 +22,7 @@ import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragment;
 
 public class MainActivity extends BaseActivity implements UpPressedDispatcher, FragmentFrameWrapper {
 
-    private final Set<UpPressedListener> upPressedListeners = new HashSet<>();
+    private final List<UpPressedListener> upPressedListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActivity implements UpPressedDispatcher, F
         if(savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             SandwichListFragment listFragment = new SandwichListFragment();
-            ft.add(R.id.contents_frame, listFragment).commit();
+            ft.add(R.id.contents_frame, listFragment, "FRAGTAG_LIST").commit();
         }
     }
 

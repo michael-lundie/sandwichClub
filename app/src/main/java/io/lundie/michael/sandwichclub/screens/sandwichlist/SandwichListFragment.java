@@ -7,10 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import io.lundie.michael.sandwichclub.screens.common.controllers.BaseFragment;
 
 public class SandwichListFragment extends BaseFragment {
+
+    public static Fragment newInstance() {
+        return new SandwichListFragment();
+    };
 
     private SandwichListController sandwichListController;
 
