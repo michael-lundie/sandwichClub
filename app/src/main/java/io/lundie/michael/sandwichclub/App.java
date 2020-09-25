@@ -17,5 +17,4 @@ public class App extends Application {
     public CompositionRoot getCompositionRoot() {
         return mCompositionRoot;
     }
-
 }
