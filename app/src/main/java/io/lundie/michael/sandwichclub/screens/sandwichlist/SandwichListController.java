@@ -2,7 +2,6 @@ package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.util.Log;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

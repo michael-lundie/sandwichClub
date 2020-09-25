@@ -1,6 +1,5 @@
 package io.lundie.michael.sandwichclub.screens.common.controllers;
 
-import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 
 public class NavHelper {

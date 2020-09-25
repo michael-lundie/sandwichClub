@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.lundie.michael.sandwichclub.R;
-import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
+import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
 
 public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListViewMvc.Listener>
         implements SandwichRecyclerAdapter.Listener, SandwichListViewMvc {

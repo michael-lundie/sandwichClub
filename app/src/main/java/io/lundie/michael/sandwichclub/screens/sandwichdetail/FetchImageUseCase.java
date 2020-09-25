@@ -2,7 +2,6 @@ package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

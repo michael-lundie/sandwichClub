@@ -1,13 +1,8 @@
 package io.lundie.michael.sandwichclub.screens.common.controllers;
 
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import io.lundie.michael.sandwichclub.App;
-import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.di.ActivityCompositionRoot;
 import io.lundie.michael.sandwichclub.di.ControllerCompositionRoot;
 

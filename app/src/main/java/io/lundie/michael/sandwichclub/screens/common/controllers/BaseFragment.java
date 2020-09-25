@@ -13,17 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import io.lundie.michael.sandwichclub.common.BaseObservable;
 import io.lundie.michael.sandwichclub.di.ControllerCompositionRoot;
 import io.lundie.michael.sandwichclub.screens.common.main.MainActivity;
 
 public class BaseFragment extends Fragment {
 
     private ControllerCompositionRoot controllerCompositionRoot;
-
-    public interface Listener {
-        void onAccessibleNavController(NavController navController);
-    }
 
     @Nullable
     @Override
