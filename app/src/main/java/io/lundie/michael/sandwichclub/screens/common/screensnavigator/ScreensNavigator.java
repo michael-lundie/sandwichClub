@@ -1,39 +1,27 @@
 package io.lundie.michael.sandwichclub.screens.common.screensnavigator;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
-import io.lundie.michael.sandwichclub.screens.common.controllers.FragmentFrameWrapper;
-import io.lundie.michael.sandwichclub.screens.sandwichdetail.SandwichDetailFragment;
-import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragment;
+import io.lundie.michael.sandwichclub.screens.common.controllers.NavHelper;
+import io.lundie.michael.sandwichclub.screens.sandwichdetail.SandwichDetailFragmentDirections;
+import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragmentDirections;
 
 public class ScreensNavigator {
 
-    private final FragmentManager fragmentManager;
-    private final FragmentFrameWrapper fragmentFrameWrapper;
+    private NavHelper navHelper;
 
-    public ScreensNavigator(FragmentManager fragmentManager, FragmentFrameWrapper fragmentFrameWrapper) {
-        this.fragmentManager = fragmentManager;
-        this.fragmentFrameWrapper = fragmentFrameWrapper;
+    public ScreensNavigator(NavHelper navHelper) {
+        this.navHelper = navHelper;
     }
 
     /*
       We will keep our frame layout out of the construction set here.
      */
     public void toScreenDetails(Sandwich sandwich) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        SandwichDetailFragment detailFragment = SandwichDetailFragment.newInstance(sandwich);
-        ft.add(fragmentFrameWrapper.getFragmentFrame().getId(), detailFragment).addToBackStack("detailsFrag").commit();
+        navHelper.getNavController().navigate(SandwichListFragmentDirections.relayListDestToDetailDest(sandwich));
     }
 
+
     public void toScreenList() {
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        SandwichListFragment fragment = (SandwichListFragment) fragmentManager.findFragmentByTag("FRAGTAG_LIST");
-        if(fragment != null) {
-            ft.replace(fragmentFrameWrapper.getFragmentFrame().getId(), fragment).commit();
-        }
+        navHelper.getNavController().navigate(SandwichDetailFragmentDirections.detailDestToListDestPop());
     }
 }

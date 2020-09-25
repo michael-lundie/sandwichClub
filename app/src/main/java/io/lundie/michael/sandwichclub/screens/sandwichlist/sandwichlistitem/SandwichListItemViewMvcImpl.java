@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
+
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
@@ -18,6 +20,7 @@ public class SandwichListItemViewMvcImpl extends BaseObservableViewMvc<SandwichL
 
     public SandwichListItemViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_list_item, parent, false));
+        setNavController(Navigation.findNavController(parent));
         title = findViewById(R.id.sandwich_item_title);
         getRootView().setOnClickListener(new View.OnClickListener() {
             @Override

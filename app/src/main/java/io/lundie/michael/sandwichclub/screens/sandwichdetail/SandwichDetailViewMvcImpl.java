@@ -59,8 +59,6 @@ public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDet
         }
     }
 
-
-
     @Override
     public void bindSandwich(Sandwich sandwich) {
         TextView originTv = (TextView) findViewById(R.id.origin_tv);

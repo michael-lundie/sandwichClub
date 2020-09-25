@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 29
@@ -19,13 +20,33 @@ android {
 
 dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    // MATERIAL
     implementation 'com.google.android.material:material:1.2.1'
+
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    def nav_version = "2.3.0"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    //OKHTTP
     implementation 'com.squareup.okhttp3:okhttp:4.8.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+
+    //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'org.mockito:mockito-core:3.4.6'
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 }

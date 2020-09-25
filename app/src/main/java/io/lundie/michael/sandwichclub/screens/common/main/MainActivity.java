@@ -6,33 +6,26 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.screens.common.controllers.BaseActivity;
-import io.lundie.michael.sandwichclub.screens.common.controllers.FragmentFrameWrapper;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedListener;
-import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragment;
 
-public class MainActivity extends BaseActivity implements UpPressedDispatcher, FragmentFrameWrapper {
+public class MainActivity extends BaseActivity implements UpPressedDispatcher {
 
     private final List<UpPressedListener> upPressedListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_contents_frame);
-        if(savedInstanceState == null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            SandwichListFragment listFragment = new SandwichListFragment();
-            ft.add(R.id.contents_frame, listFragment, "FRAGTAG_LIST").commit();
-        }
+        setContentView(R.layout.layout_activity_host);
     }
 
     @Override
@@ -61,10 +54,5 @@ public class MainActivity extends BaseActivity implements UpPressedDispatcher, F
             }
         }
         if(!upPressConsumed) super.onBackPressed();
-    }
-
-    @Override
-    public FrameLayout getFragmentFrame() {
-        return findViewById(R.id.contents_frame);
     }
 }

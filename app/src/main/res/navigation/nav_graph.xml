@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/sandwich_list_frag_dest">
+
+    <fragment
+        android:id="@+id/sandwich_list_frag_dest"
+        android:name="io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListFragment"
+        android:label="Sandwich List" >
+        <action
+            android:id="@+id/relay_list_dest_to_detail_dest"
+            app:destination="@id/sandwich_detail_frag_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/sandwich_detail_frag_dest"
+        android:name="io.lundie.michael.sandwichclub.screens.sandwichdetail.SandwichDetailFragment"
+        android:label="Sandwich Detail" >
+        <argument
+            android:name="sandwich_parcelable"
+            app:nullable="false"
+            app:argType="io.lundie.michael.sandwichclub.sandwiches.Sandwich" />
+        <action
+            android:id="@+id/detail_dest_to_list_dest_pop"
+            app:destination="@id/sandwich_list_frag_dest"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/sandwich_list_frag_dest"
+            app:popUpToInclusive="false" />
+    </fragment>
+</navigation>

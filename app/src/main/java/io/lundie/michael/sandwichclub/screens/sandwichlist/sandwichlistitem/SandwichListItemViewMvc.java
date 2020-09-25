@@ -1,5 +1,7 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist.sandwichlistitem;
 
+import androidx.navigation.NavController;
+
 import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 

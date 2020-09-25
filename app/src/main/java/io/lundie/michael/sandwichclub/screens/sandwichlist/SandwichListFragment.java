@@ -22,6 +22,7 @@ public class SandwichListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         SandwichListViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getSandwichListViewMvc(container);
         setToolbarWithTitle(viewMvc.getToolbar(), false);
         sandwichListController = getCompositionRoot().getSandwichListController();

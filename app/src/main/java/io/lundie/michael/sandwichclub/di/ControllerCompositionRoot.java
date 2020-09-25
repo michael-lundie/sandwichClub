@@ -1,22 +1,19 @@
 package io.lundie.michael.sandwichclub.di;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import io.lundie.michael.sandwichclub.common.AppExecutors;
-import io.lundie.michael.sandwichclub.screens.common.controllers.FragmentFrameWrapper;
+import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
+import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
+import io.lundie.michael.sandwichclub.screens.common.controllers.NavHelper;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
 import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNavigator;
-import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
-import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
 import io.lundie.michael.sandwichclub.screens.sandwichdetail.FetchImageUseCase;
 import io.lundie.michael.sandwichclub.screens.sandwichdetail.SandwichDetailController;
 import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListController;
@@ -28,6 +25,7 @@ public class ControllerCompositionRoot {
 
     private Picasso picasso;
     private SandwichListController sandwichListController;
+    private NavHelper navHelper;
 
     public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
         this.activityCompositionRoot = activityCompositionRoot;
@@ -40,8 +38,11 @@ public class ControllerCompositionRoot {
         return picasso;
     }
 
-    private FragmentManager getFragmentManager() {
-        return getActivity().getSupportFragmentManager();
+    public NavHelper getNavHelper() {
+        if(navHelper == null) {
+            navHelper = new NavHelper();
+        }
+        return navHelper;
     }
 
     private AppCompatActivity getActivity() {
@@ -88,11 +89,7 @@ public class ControllerCompositionRoot {
     }
 
     private ScreensNavigator getScreensNavigator() {
-        return new ScreensNavigator(getFragmentManager(), getFragmentFrameWrapper());
-    }
-
-    private FragmentFrameWrapper getFragmentFrameWrapper() {
-        return (FragmentFrameWrapper) getActivity();
+        return new ScreensNavigator(getNavHelper());
     }
 
     public SandwichDetailController getSandwichDetailController() {

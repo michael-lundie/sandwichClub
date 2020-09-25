@@ -1,6 +1,7 @@
 package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ public class SandwichDetailFragment extends BaseFragment {
 
     private SandwichDetailViewMvc viewMvc;
 
-    public static final String PARCELABLE_EXTRA = "extra_parcel";
+    public static final String PARCELABLE_EXTRA = "sandwich_parcelable";
 
     public final String LOG_TAG = getClass().getSimpleName();
 
@@ -32,13 +33,15 @@ public class SandwichDetailFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         viewMvc = getCompositionRoot().getViewMvcFactory().getSandwichDetailViewMvc(container);
-
         sandwichDetailController = getCompositionRoot().getSandwichDetailController();
         sandwichDetailController.bindView(viewMvc);
         setToolbarWithTitle(viewMvc.getToolbar(), true);
 
         if(getArguments() != null) {
+            Log.i(getClass().getSimpleName(), "Arguments not null.");
+
             sandwichDetailController.setSandwichData((Sandwich) getArguments().getParcelable(PARCELABLE_EXTRA));
         }
         return viewMvc.getRootView();
