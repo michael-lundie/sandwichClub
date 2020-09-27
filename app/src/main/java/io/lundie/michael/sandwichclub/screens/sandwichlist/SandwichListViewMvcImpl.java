@@ -1,10 +1,12 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,11 +21,13 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
         implements SandwichRecyclerAdapter.Listener, SandwichListViewMvc {
 
     private RecyclerView sandwichesRv;
+    private ContentLoadingProgressBar sandwichesListPb;
     private SandwichRecyclerAdapter adapter;
 
     public SandwichListViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_list, parent, false));
         sandwichesRv = findViewById(R.id.sandwiches_listview);
+        sandwichesListPb = findViewById(R.id.sandwich_list_pb);
         sandwichesRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SandwichRecyclerAdapter(this, viewMvcFactory);
         sandwichesRv.setAdapter(adapter);
@@ -44,5 +48,15 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
     @Override
     public void bindSandwiches(List<Sandwich> sandwiches) {
         adapter.bindSandwiches(sandwiches);
+    }
+
+    @Override
+    public void showProgressIndicator() {
+        sandwichesListPb.show();
+    }
+
+    @Override
+    public void hideProgressIndicator() {
+        sandwichesListPb.hide();
     }
 }

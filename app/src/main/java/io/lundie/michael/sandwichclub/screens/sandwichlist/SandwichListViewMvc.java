@@ -20,4 +20,8 @@ public interface SandwichListViewMvc extends ObservableViewMvc<SandwichListViewM
     Toolbar getToolbar();
 
     void bindSandwiches(List<Sandwich> sandwichList);
+
+    void showProgressIndicator();
+
+    void hideProgressIndicator();
 }

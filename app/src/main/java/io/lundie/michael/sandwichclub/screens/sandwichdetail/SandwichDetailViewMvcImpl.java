@@ -57,6 +57,7 @@ public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDet
             collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolBarSmall);
             collapsingToolbar.setExpandedTitleMargin(48,0,16,112);
         }
+        collapsingToolbar.setTitle(toolbarTitle);
     }
 
     @Override

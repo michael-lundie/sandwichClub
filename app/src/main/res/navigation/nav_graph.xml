@@ -11,7 +11,9 @@
         android:label="Sandwich List" >
         <action
             android:id="@+id/relay_list_dest_to_detail_dest"
-            app:destination="@id/sandwich_detail_frag_dest" />
+            app:destination="@id/sandwich_detail_frag_dest"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/sandwich_detail_frag_dest"
@@ -23,9 +25,7 @@
             app:argType="io.lundie.michael.sandwichclub.sandwiches.Sandwich" />
         <action
             android:id="@+id/detail_dest_to_list_dest_pop"
-            app:destination="@id/sandwich_list_frag_dest"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/sandwich_list_frag_dest"
-            app:popUpToInclusive="false" />
+            app:launchSingleTop="false"
+            app:popUpTo="@id/sandwich_list_frag_dest" />
     </fragment>
 </navigation>

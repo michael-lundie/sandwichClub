@@ -20,7 +20,6 @@ public class ScreensNavigator {
         navHelper.getNavController().navigate(SandwichListFragmentDirections.relayListDestToDetailDest(sandwich));
     }
 
-
     public void toScreenList() {
         navHelper.getNavController().navigate(SandwichDetailFragmentDirections.detailDestToListDestPop());
     }

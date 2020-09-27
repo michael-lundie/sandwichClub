@@ -26,10 +26,6 @@ public class SandwichDetailController implements FetchImageUseCase.Listener, UpP
 
     public void bindView(SandwichDetailViewMvc viewMvc) { sandwichDetailViewMvc = viewMvc; }
 
-    public void setCollapsingToolbar() {
-        sandwichDetailViewMvc.setCollapsingToolbar(sandwich.getMainName());
-    }
-
     public void onStart() {
         dispatcher.registerListener(this);
         fetchImageUseCase.registerListener(this);
@@ -64,8 +60,8 @@ public class SandwichDetailController implements FetchImageUseCase.Listener, UpP
     }
 
     private void onSandwichDataReceived(Sandwich sandwich) {
-        sandwichDetailViewMvc.bindSandwich(sandwich);
         sandwichDetailViewMvc.setCollapsingToolbar(sandwich.getMainName());
+        sandwichDetailViewMvc.bindSandwich(sandwich);
     }
 
     @Override
