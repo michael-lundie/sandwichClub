@@ -1,6 +1,7 @@
 package io.lundie.michael.sandwichclub.di;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import io.lundie.michael.sandwichclub.common.AppExecutors;
 import okhttp3.Call;
@@ -12,6 +13,7 @@ public class CompositionRoot {
 
     private OkHttpClient okHttpClient;
     private Gson gson;
+    private Picasso picasso;
 
     public Call getSandwichesDataDumpApi() {
         Request request = new Request.Builder()

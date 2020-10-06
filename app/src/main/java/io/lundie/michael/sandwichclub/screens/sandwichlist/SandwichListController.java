@@ -47,6 +47,7 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
         dispatcher.registerListener(this);
         sandwichListViewMvc.registerListener(this);
 
+        //TODO: If case for logging purposes only - remove
         if(lastSandwichFetch != 0L) {
             long seconds;
             seconds = System.nanoTime() - lastSandwichFetch;
@@ -58,6 +59,8 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
             lastSandwichFetch = System.nanoTime();
             sandwichListViewMvc.showProgressIndicator();
             fetchSandwichesUseCase.fetchSandwichesAndNotify();
+        } else {
+            sandwichListViewMvc.hideProgressIndicator();
         }
     }
 

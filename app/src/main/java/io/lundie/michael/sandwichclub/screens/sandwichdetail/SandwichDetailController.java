@@ -3,6 +3,8 @@ package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import com.squareup.picasso.Target;
+
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedListener;
@@ -38,15 +40,22 @@ public class SandwichDetailController implements FetchImageUseCase.Listener, UpP
     }
 
     @Override
+    public void onImagePreparing(Drawable placeHolderDrawable, Target target) {
+        sandwichDetailViewMvc.showImageProgressBar();
+    }
+
+    @Override
     public void onImageFetched(Bitmap bitmap) {
         sandwichDetailViewMvc.bindHeaderImage(bitmap);
         sandwichDetailViewMvc.hideImageProgressBar();
     }
 
     @Override
-    public void onImagePreparing(Drawable placeHolderDrawable) {
-        sandwichDetailViewMvc.showImageProgressBar();
+    public void onImageFetchedFromCache(Bitmap bitmap) {
+        sandwichDetailViewMvc.bindHeaderImage(bitmap);
+        sandwichDetailViewMvc.hideImageProgressBar();
     }
+
 
     @Override
     public void onImageFetchFailed(Drawable errorDrawable) {

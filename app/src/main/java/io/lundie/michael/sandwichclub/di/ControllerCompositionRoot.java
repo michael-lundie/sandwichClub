@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import io.lundie.michael.sandwichclub.common.AppExecutors;
 import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
+import io.lundie.michael.sandwichclub.screens.common.FetchImageUseCaseFactory;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
 import io.lundie.michael.sandwichclub.screens.common.controllers.NavHelper;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
@@ -62,7 +63,15 @@ public class ControllerCompositionRoot {
     }
 
     public ViewMvcFactory getViewMvcFactory() {
-        return new ViewMvcFactory(getLayoutInflater());
+        return new ViewMvcFactory(getLayoutInflater(), getFetchImageUseCaseFactory());
+    }
+
+    // Factory is used for injection into adapters via Mvc implementation
+    // TODO: fetchImageUseCase is logic that should be instantiated in a
+    //  controller - try to find a better way to get this to the adapter?
+    //  Lazy injection maybe?
+    private FetchImageUseCaseFactory getFetchImageUseCaseFactory() {
+        return new FetchImageUseCaseFactory(getPicasso());
     }
 
     public FetchSandwichesUseCase getFetchSandwichesUseCase() {

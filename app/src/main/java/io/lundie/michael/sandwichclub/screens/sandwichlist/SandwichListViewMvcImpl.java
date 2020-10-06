@@ -1,7 +1,6 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import java.util.List;
 
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
+import io.lundie.michael.sandwichclub.screens.common.FetchImageUseCaseFactory;
 import io.lundie.michael.sandwichclub.screens.common.ViewMvcFactory;
 import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
 
@@ -24,12 +24,13 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
     private ContentLoadingProgressBar sandwichesListPb;
     private SandwichRecyclerAdapter adapter;
 
-    public SandwichListViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
+    public SandwichListViewMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent,
+                                   ViewMvcFactory viewMvcFactory, FetchImageUseCaseFactory imageUseCaseFactory) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_list, parent, false));
         sandwichesRv = findViewById(R.id.sandwiches_listview);
         sandwichesListPb = findViewById(R.id.sandwich_list_pb);
         sandwichesRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SandwichRecyclerAdapter(this, viewMvcFactory);
+        adapter = new SandwichRecyclerAdapter(this, viewMvcFactory, imageUseCaseFactory);
         sandwichesRv.setAdapter(adapter);
     }
 

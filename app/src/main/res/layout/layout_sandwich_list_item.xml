@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/sandwich_item_image_shimmer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/sandwich_item_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="16dp" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/sandwich_item_title"
-        android:textSize="@dimen/text_label"
+        android:layout_width="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_height="40dp"
         android:padding="@dimen/layout_list_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:textSize="@dimen/text_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sandwich_item_image_shimmer"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

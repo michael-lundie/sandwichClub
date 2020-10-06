@@ -24,9 +24,10 @@ dependencies {
 
     // MATERIAL
     implementation 'com.google.android.material:material:1.2.1'
-
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // SHIMMER
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     def nav_version = "2.3.0"
 

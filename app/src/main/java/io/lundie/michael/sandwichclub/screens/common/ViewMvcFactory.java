@@ -15,18 +15,19 @@ import io.lundie.michael.sandwichclub.screens.sandwichlist.SandwichListViewMvcIm
 public class ViewMvcFactory {
 
     private final LayoutInflater layoutInflater;
+    private FetchImageUseCaseFactory imageUseCaseFactory;
 
-    public ViewMvcFactory(LayoutInflater layoutInflater) {
+    public ViewMvcFactory(LayoutInflater layoutInflater, FetchImageUseCaseFactory imageUseCaseFactory) {
         this.layoutInflater = layoutInflater;
+        this.imageUseCaseFactory = imageUseCaseFactory;
     }
 
     public SandwichListViewMvc getSandwichListViewMvc(@Nullable ViewGroup parent) {
-        return new SandwichListViewMvcImpl(layoutInflater, parent, this);
+        return new SandwichListViewMvcImpl(layoutInflater, parent, this, imageUseCaseFactory);
     }
 
     public SandwichDetailViewMvc getSandwichDetailViewMvc(@Nullable ViewGroup parent) {
-        return new SandwichDetailViewMvcImpl(layoutInflater, parent) {
-        };
+        return new SandwichDetailViewMvcImpl(layoutInflater, parent);
     }
 
     public SandwichListItemViewMvc getSandwichListItemViewMvc(@Nullable ViewGroup parent) {
