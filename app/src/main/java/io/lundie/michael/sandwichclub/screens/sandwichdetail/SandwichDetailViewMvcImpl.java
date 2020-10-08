@@ -29,6 +29,7 @@ import io.lundie.michael.sandwichclub.screens.common.view.BaseViewMvc;
 public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDetailViewMvc.Listener>
         implements SandwichDetailViewMvc {
 
+    CollapsingToolbarLayout collapsingToolbar;
     private ProgressBar progressBar;
     private ImageView headerIv;
     private TextView imageErrorTv;
@@ -38,6 +39,12 @@ public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDet
         progressBar = findViewById(R.id.progressbar);
         headerIv = findViewById(R.id.image_iv);
         imageErrorTv = findViewById(R.id.image_error);
+
+    }
+
+    @Override
+    public View getSharedTransitionView() {
+        return  headerIv;
     }
 
     @Override
@@ -47,7 +54,8 @@ public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDet
 
     @Override
     public void setCollapsingToolbar(String toolbarTitle) {
-        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar = findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTransitionName(toolbarTitle + "_title");
         if(toolbarTitle.isEmpty()) {
             toolbarTitle = getContext().getString(R.string.string_untitled);
         }
@@ -62,6 +70,9 @@ public class SandwichDetailViewMvcImpl extends BaseObservableViewMvc<SandwichDet
 
     @Override
     public void bindSandwich(Sandwich sandwich) {
+        headerIv.setTransitionName(sandwich.getMainName() + "_img");
+
+        
         TextView originTv = (TextView) findViewById(R.id.origin_tv);
         TextView alsoKnownAsTv = (TextView)  findViewById(R.id.also_known_tv);
         TextView ingredientsTv = (TextView) findViewById(R.id.ingredients_tv);

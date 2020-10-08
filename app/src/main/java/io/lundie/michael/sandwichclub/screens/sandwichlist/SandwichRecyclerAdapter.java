@@ -1,13 +1,16 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.FetchImageUseCaseFactory;
@@ -19,7 +22,7 @@ public class SandwichRecyclerAdapter extends RecyclerView.Adapter<SandwichRecycl
     implements  SandwichListItemViewMvc.Listener {
 
     public interface Listener {
-        void onSandwichClicked(Sandwich sandwich);
+        void onSandwichClicked(Sandwich sandwich, Map<View, String> sharedElementsForTransition);
     }
 
     private final Listener listener;
@@ -36,9 +39,9 @@ public class SandwichRecyclerAdapter extends RecyclerView.Adapter<SandwichRecycl
     }
 
     @Override
-    public void onSandwichClicked(Sandwich sandwich) {
+    public void onSandwichClicked(Sandwich sandwich, Map<View, String> sharedElementsForTransition) {
         Log.i(getClass().getSimpleName(), "Recycler Adapter: Click registered");
-        this.listener.onSandwichClicked(sandwich);
+        this.listener.onSandwichClicked(sandwich, sharedElementsForTransition);
     }
 
     public void bindSandwiches(List<Sandwich> sandwiches) {

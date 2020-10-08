@@ -7,19 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/sandwich_item_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/sandwich_item_image_shimmer"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/sandwich_item_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="16dp" />
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sandwich_item_title"

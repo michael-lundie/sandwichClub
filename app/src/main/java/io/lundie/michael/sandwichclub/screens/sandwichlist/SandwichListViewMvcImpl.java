@@ -1,7 +1,9 @@
 package io.lundie.michael.sandwichclub.screens.sandwichlist;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
 
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
@@ -35,9 +38,9 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
     }
 
     @Override
-    public void onSandwichClicked(Sandwich sandwich) {
+    public void onSandwichClicked(Sandwich sandwich, Map<View, String> sharedElementsForTransition) {
         for (Listener listener : getListeners()) {
-            listener.onSandwichClicked(sandwich);
+            listener.onSandwichClicked(sandwich, sharedElementsForTransition);
         }
     }
 
@@ -60,4 +63,5 @@ public class SandwichListViewMvcImpl extends BaseObservableViewMvc<SandwichListV
     public void hideProgressIndicator() {
         sandwichesListPb.hide();
     }
+
 }

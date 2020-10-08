@@ -2,6 +2,7 @@ package io.lundie.michael.sandwichclub.screens.sandwichdetail;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -9,6 +10,8 @@ import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
 
 public interface SandwichDetailViewMvc extends ObservableViewMvc<SandwichDetailViewMvc.Listener> {
+
+    View getSharedTransitionView();
 
     interface Listener {
         void onBackPressed();

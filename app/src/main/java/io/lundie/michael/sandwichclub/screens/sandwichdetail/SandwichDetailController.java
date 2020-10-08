@@ -5,18 +5,25 @@ import android.graphics.drawable.Drawable;
 
 import com.squareup.picasso.Target;
 
+import io.lundie.michael.sandwichclub.common.BaseObservable;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedDispatcher;
 import io.lundie.michael.sandwichclub.screens.common.controllers.UpPressedListener;
 import io.lundie.michael.sandwichclub.screens.common.screensnavigator.ScreensNavigator;
 
-public class SandwichDetailController implements FetchImageUseCase.Listener, UpPressedListener {
+public class SandwichDetailController extends BaseObservable<SandwichDetailController.Listener>
+        implements FetchImageUseCase.Listener, UpPressedListener {
 
     private FetchImageUseCase fetchImageUseCase;
+    private Listener listener;
     SandwichDetailViewMvc sandwichDetailViewMvc;
     private final ScreensNavigator screensNavigator;
     private UpPressedDispatcher dispatcher;
     private Sandwich sandwich;
+
+    public interface Listener {
+        void onImagesFetched();
+    }
 
     public SandwichDetailController(FetchImageUseCase fetchImageUseCase,
                                     UpPressedDispatcher dispatcher,
@@ -48,14 +55,19 @@ public class SandwichDetailController implements FetchImageUseCase.Listener, UpP
     public void onImageFetched(Bitmap bitmap) {
         sandwichDetailViewMvc.bindHeaderImage(bitmap);
         sandwichDetailViewMvc.hideImageProgressBar();
+        for(Listener listener : getListeners()) {
+            listener.onImagesFetched();
+        }
     }
 
     @Override
     public void onImageFetchedFromCache(Bitmap bitmap) {
         sandwichDetailViewMvc.bindHeaderImage(bitmap);
         sandwichDetailViewMvc.hideImageProgressBar();
+        for(Listener listener : getListeners()) {
+            listener.onImagesFetched();
+        }
     }
-
 
     @Override
     public void onImageFetchFailed(Drawable errorDrawable) {

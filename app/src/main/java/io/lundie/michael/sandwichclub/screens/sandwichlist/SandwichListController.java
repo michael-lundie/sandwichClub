@@ -3,8 +3,11 @@ package io.lundie.michael.sandwichclub.screens.sandwichlist;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.lundie.michael.sandwichclub.sandwiches.FetchSandwichesUseCase;
@@ -83,9 +86,9 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
     }
 
     @Override
-    public void onSandwichClicked(Sandwich sandwich) {
+    public void onSandwichClicked(Sandwich sandwich, Map<View, String> sharedElementsForTransition) {
         Log.e(getClass().getSimpleName(), "Controller: Sandwich " + sandwich.getMainName() + " CLICKED.");
-        screensNavigator.toScreenDetails(sandwich);
+        screensNavigator.toScreenDetails(sandwich, sharedElementsForTransition);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class SandwichListController implements SandwichListViewMvcImpl.Listener,
         sandwiches = savedState.sandwiches;
         lastSandwichFetch = savedState.lastFetched;
     }
+
 
     public static class SavedState implements Parcelable {
         private List<Sandwich> sandwiches;

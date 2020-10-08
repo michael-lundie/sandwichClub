@@ -17,6 +17,13 @@ public class FetchImageUseCase extends BaseObservable<FetchImageUseCase.Listener
     Picasso picasso;
     private final Target target;
 
+    public interface Listener {
+        void onImageFetched(Bitmap bitmap);
+        void onImageFetchedFromCache(Bitmap bitmap);
+        void onImagePreparing(Drawable placeHolderDrawable, Target target);
+        void onImageFetchFailed(Drawable errorDrawable);
+    }
+
     public FetchImageUseCase(Picasso picasso) {
         this.picasso = picasso;
         this.target = createPicassoTarget();
@@ -51,13 +58,6 @@ public class FetchImageUseCase extends BaseObservable<FetchImageUseCase.Listener
                 notifyImagePreparing(placeHolderDrawable);
             }
         };
-    }
-
-    public interface Listener {
-        void onImageFetched(Bitmap bitmap);
-        void onImageFetchedFromCache(Bitmap bitmap);
-        void onImagePreparing(Drawable placeHolderDrawable, Target target);
-        void onImageFetchFailed(Drawable errorDrawable);
     }
 
     public void fetchImageAndNotify(String imageUrl) {

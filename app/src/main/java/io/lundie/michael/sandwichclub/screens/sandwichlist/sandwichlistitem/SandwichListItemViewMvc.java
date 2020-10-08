@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.squareup.picasso.Target;
 
+import java.util.Map;
+
 import io.lundie.michael.sandwichclub.screens.common.view.ObservableViewMvc;
 import io.lundie.michael.sandwichclub.sandwiches.Sandwich;
 import io.lundie.michael.sandwichclub.screens.sandwichdetail.FetchImageUseCase;
@@ -25,7 +27,7 @@ public interface SandwichListItemViewMvc extends ObservableViewMvc<SandwichListI
     void onImageFetchFailed(Drawable errorDrawable);
 
     interface Listener {
-        void onSandwichClicked(Sandwich sandwich);
+        void onSandwichClicked(Sandwich sandwich, Map<View, String> imageView);
     }
 
     void registerListener(Listener listener);

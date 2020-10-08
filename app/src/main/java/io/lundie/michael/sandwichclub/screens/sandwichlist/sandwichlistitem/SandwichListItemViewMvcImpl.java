@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.squareup.picasso.Target;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.lundie.michael.sandwichclub.R;
 import io.lundie.michael.sandwichclub.screens.common.view.BaseObservableViewMvc;
@@ -26,29 +26,40 @@ public class SandwichListItemViewMvcImpl extends BaseObservableViewMvc<SandwichL
     private final ImageView imageView;
     //private final ShimmerFrameLayout shimmerView;
     private Sandwich sandwich;
-    private final TextView title;
+    private final TextView titleView;
 
     public SandwichListItemViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
         setRootView(inflater.inflate(R.layout.layout_sandwich_list_item, parent, false));
-        title = findViewById(R.id.sandwich_item_title);
-        //shimmerView = findViewById(R.id.sandwich_item_image_shimmer);
+        titleView = findViewById(R.id.sandwich_item_title);
         imageView = findViewById(R.id.sandwich_item_image);
         getRootView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setTransitionNames();
                 Log.i(getClass().getSimpleName(), "ViewMvcImpl: Click registered");
                 for (Listener listener : getListeners()) {
-                    listener.onSandwichClicked(sandwich);
+                    listener.onSandwichClicked(sandwich, getSharedElementMap());
                 }
             }
         });
-        //shimmerView.startShimmer();
+    }
+
+    private void setTransitionNames() {
+        titleView.setTransitionName(sandwich.getMainName() + "_title");
+        imageView.setTransitionName(sandwich.getMainName() + "_img");
+    }
+
+    private Map<View, String> getSharedElementMap() {
+        final Map<View, String> sharedElementMap = new HashMap<>();
+        sharedElementMap.put(titleView, sandwich.getMainName() + "_title");
+        sharedElementMap.put(imageView, sandwich.getMainName() + "_img");
+        return sharedElementMap;
     }
 
     @Override
     public void bindSandwich(Sandwich sandwich) {
         this.sandwich = sandwich;
-        title.setText(sandwich.getMainName());
+        titleView.setText(sandwich.getMainName());
     }
 
 
